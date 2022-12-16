@@ -17,6 +17,7 @@
     }
   },
   "errors": {
+    "noItems": "No items found",
     "notImplementedYet": "Not implemented yet"
   }
 }

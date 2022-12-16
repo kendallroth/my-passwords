@@ -19,14 +19,17 @@
         {{ getErrorMessage(collectionsQuery.error.value) }}
       </VAlert>
       <template v-else>
-        <VList :disabled="collectionsQuery.isFetching.value">
+        <VList v-if="filteredCollections?.length" :disabled="collectionsQuery.isFetching.value">
           <VListItem
-            v-for="item in collectionsQuery.data.value"
+            v-for="item in filteredCollections"
             :key="item.id"
             :title="item.name"
             @click="notifyNotImplemented"
           />
         </VList>
+        <VAlert v-else class="ma-8" type="info" variant="tonal">
+          {{ t("common.errors.noItems") }}
+        </VAlert>
       </template>
     </VCard>
   </VMain>
@@ -35,10 +38,11 @@
 <script setup lang="ts">
 import { mdiRefresh } from "@mdi/js";
 import { useQuery } from "@tanstack/vue-query";
+import { computed, onMounted, onUnmounted, reactive } from "vue";
 import { useI18n } from "vue-i18n";
 
 import { ActionBar } from "@components/layout";
-import { useErrors, useSnackbar } from "@composables";
+import { useAppSearch, useErrors, useSnackbar } from "@composables";
 import { ApiService } from "@services";
 import { sleep } from "@utilities";
 
@@ -57,6 +61,22 @@ const fetchCollections = async (): Promise<Collection[]> => {
 const collectionsQuery = useQuery({
   queryKey: ["collections"],
   queryFn: fetchCollections,
+});
+
+const filteredCollections = computed(() => {
+  const { value } = collectionsQuery.data;
+  const search = appSearch.text.trim();
+  if (!value || !search) return value;
+
+  return value.filter((c) => c.name.toLowerCase().includes(search.toLowerCase()));
+});
+
+const appSearch = reactive(useAppSearch());
+onMounted(() => {
+  appSearch.clear();
+});
+onUnmounted(() => {
+  appSearch.clear();
 });
 </script>
 

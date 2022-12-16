@@ -4,14 +4,17 @@
     <VIcon class="ml-4" color="white" :icon="mdiShield" />
     <VToolbarTitle>{{ t("common.app.title") }}</VToolbarTitle>
     <VTextField
+      v-if="appSearch.shown"
       class="app-bar__search"
       clearable
       density="comfortable"
       hide-details
+      :model-value="appSearch.text"
       :placeholder="t('common.appBar.search')"
       :prepend-inner-icon="mdiSearch"
-      readonly
       variant="solo"
+      @click:clear="appSearch.clear"
+      @update:model-value="appSearch.change"
     />
     <VSpacer />
     <VIcon
@@ -67,13 +70,15 @@ import flagES from "@localization/icons/flag-es.png";
 import flagUS from "@localization/icons/flag-us.png";
 import { mdiAccount, mdiWifi as mdiNetwork, mdiMagnify as mdiSearch, mdiShield } from "@mdi/js";
 import { useIsFetching } from "@tanstack/vue-query";
-import { computed } from "vue";
+import { computed, reactive } from "vue";
 import { useI18n } from "vue-i18n";
 
-import { useSnackbar } from "@composables";
+import { useAppSearch, useSnackbar } from "@composables";
 import { setLocale } from "@localization";
 
 import type { Languages } from "@localization";
+
+const appSearch = reactive(useAppSearch());
 
 const { t, ...i18n } = useI18n();
 const { notifyNotImplemented } = useSnackbar();
@@ -99,6 +104,7 @@ const currentLanguage = computed(
   () => languages[i18n.locale.value as Languages] ?? languages["en"],
 );
 
+// Used to display an indicator when any app data is fetching
 const fetchingData = useIsFetching();
 </script>
 

@@ -54,11 +54,11 @@
 <script setup lang="ts">
 import { mdiRefresh } from "@mdi/js";
 import { useQuery } from "@tanstack/vue-query";
-import { ref } from "vue";
+import { onMounted, onUnmounted, reactive, ref } from "vue";
 import { useI18n } from "vue-i18n";
 
 import { ActionBar } from "@components/layout";
-import { useErrors } from "@composables";
+import { useAppSearch, useErrors } from "@composables";
 import { ApiService } from "@services";
 import { sleep } from "@utilities";
 
@@ -95,6 +95,15 @@ const tableColumns: PasswordTableColumn[] = [
   { labelKey: "username" },
   { labelKey: "notes" },
 ];
+
+// TODO: Figure out a way to have this happen automatically...
+const appSearch = reactive(useAppSearch());
+onMounted(() => {
+  appSearch.hide();
+});
+onUnmounted(() => {
+  appSearch.show();
+});
 </script>
 
 <style lang="scss" scoped></style>
