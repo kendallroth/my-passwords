@@ -1,7 +1,9 @@
-import { fileURLToPath, URL } from 'node:url'
+/// <reference types="vitest" />
+import { fileURLToPath, URL } from "node:url";
 
 import vue from "@vitejs/plugin-vue";
 import { defineConfig, loadEnv } from "vite";
+import vuetify from "vite-plugin-vuetify";
 
 export default defineConfig(({ mode }) => {
   const envConfig = loadEnv(mode, process.cwd());
@@ -14,7 +16,7 @@ export default defineConfig(({ mode }) => {
         scss: {},
       },
     },
-    plugins: [vue()],
+    plugins: [vue(), vuetify({ autoImport: true })],
     resolve: {
       alias: {
         "@assets": getPath("assets"),
