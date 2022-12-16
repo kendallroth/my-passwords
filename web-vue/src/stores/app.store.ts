@@ -3,7 +3,22 @@ import { ref } from "vue";
 
 export type AppTheme = "light" | "dark";
 
-export const useAppStore = defineStore("app", () => {
+export interface UiFlags {
+  drawerOpen: boolean;
+}
+
+const setupStore = () => {
+  const uiFlags = ref<UiFlags>({
+    drawerOpen: true,
+  });
+
+  const setUiFlags = (flags: Partial<UiFlags>) => {
+    Object.keys(flags).forEach((key) => {
+      const value = flags[key as keyof UiFlags] as boolean;
+      uiFlags.value[key as keyof UiFlags] = value;
+    });
+  };
+
   const theme = ref<AppTheme>("light");
   const setTheme = (themeName: AppTheme) => {
     theme.value = themeName;
@@ -11,6 +26,12 @@ export const useAppStore = defineStore("app", () => {
 
   return {
     setTheme,
+    setUiFlags,
     theme,
+    uiFlags,
   };
+};
+
+export const useAppStore = defineStore("app", setupStore, {
+  persist: true,
 });

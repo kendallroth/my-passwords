@@ -3,14 +3,14 @@
     class="app-drawer"
     color="blue-grey-darken-3"
     permanent
-    :rail="drawerRailMode"
-    @click="drawerRailMode = false"
+    :rail="!uiFlags.drawerOpen"
+    @click="toggleDrawer(true)"
   >
     <VList nav>
       <VListItem
-        :prepend-icon="drawerRailMode ? mdiChevronRight : mdiChevronLeft"
+        :prepend-icon="uiFlags.drawerOpen ? mdiChevronLeft : mdiChevronRight"
         :title="t('common.appDrawer.menuItems.collapse')"
-        @click.stop="drawerRailMode = !drawerRailMode"
+        @click.stop="toggleDrawer(!uiFlags.drawerOpen)"
       />
     </VList>
     <VDivider />
@@ -44,12 +44,10 @@ import {
   mdiFormTextboxPassword as mdiPassword,
   mdiCog as mdiSettings,
 } from "@mdi/js";
-import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 
 import { useSnackbar } from "@composables";
-
-const drawerRailMode = ref(false);
+import { useAppStore } from "@stores";
 
 interface DrawerMenuItem {
   icon: string;
@@ -61,6 +59,12 @@ const drawerMenuItems: DrawerMenuItem[] = [
   { icon: mdiPassword, labelKey: "passwords", link: "/passwords" },
   { icon: mdiCollection, labelKey: "collections", link: "/collections" },
 ];
+
+const { uiFlags, setUiFlags } = useAppStore();
+
+const toggleDrawer = (open: boolean) => {
+  setUiFlags({ drawerOpen: open });
+};
 
 const { t } = useI18n();
 const { notifyNotImplemented } = useSnackbar();

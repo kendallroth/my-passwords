@@ -36,7 +36,7 @@
           v-for="language in languageList"
           :key="language.code"
           :title="language.title"
-          @click="onLanguageSelect(language.code)"
+          @click="setLocale(language.code)"
         >
           <template #prepend>
             <VAvatar
@@ -71,6 +71,7 @@ import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 
 import { useSnackbar } from "@composables";
+import { setLocale } from "@localization";
 
 import type { Languages } from "@localization";
 
@@ -97,10 +98,6 @@ const languageList = Object.values(languages);
 const currentLanguage = computed(
   () => languages[i18n.locale.value as Languages] ?? languages["en"],
 );
-
-const onLanguageSelect = async (code: Languages) => {
-  i18n.locale.value = code;
-};
 
 const fetchingData = useIsFetching();
 </script>

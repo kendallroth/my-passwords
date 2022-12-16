@@ -18,10 +18,36 @@ const messages = {
   },
 };
 
-export const i18nPlugin = createI18n({
+const I18N_KEY = "i18n-language";
+export const detectLocale = (): Languages => {
+  const languageKeys = Object.keys(messages);
+  let languageKey: Languages = "en";
+  const browserLanguageKey = navigator.language.split("-")[0];
+  if (languageKeys.includes(browserLanguageKey)) {
+    languageKey = browserLanguageKey as Languages;
+  }
+
+  const storedLanguageKey = localStorage.getItem(I18N_KEY);
+  if (languageKeys.includes(storedLanguageKey ?? "")) {
+    languageKey = storedLanguageKey as Languages;
+  }
+
+  return languageKey;
+};
+
+/** NOTE: Does not actually set the locale (managed through hooks) */
+export const setLocale = (locale: Languages) => {
+  i18nPlugin.global.locale.value = locale;
+
+  localStorage.setItem(I18N_KEY, locale);
+};
+
+const i18nPlugin = createI18n({
   // Must be false in order to use Composition API
   legacy: false,
-  locale: "en",
+  locale: detectLocale(),
   fallbackLocale: "en", // set fallback locale
   messages,
 });
+
+export { i18nPlugin };

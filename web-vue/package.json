@@ -21,6 +21,7 @@
     "axios": "^1.2.1",
     "immer": "^9.0.16",
     "pinia": "^2.0.28",
+    "pinia-plugin-persistedstate": "^3.0.1",
     "uuid": "^9.0.0",
     "vee-validate": "^4.7.3",
     "vite-plugin-vuetify": "^1.0.1",
