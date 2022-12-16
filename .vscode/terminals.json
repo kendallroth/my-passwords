@@ -20,6 +20,19 @@
       "cwd": "./server-json",
       "description": "Server (JSON) process",
       "icon": "run"
+    },
+    {
+      "name": "web-vue",
+      "cwd": "./web-vue",
+      "description": "Web (Vue) directory",
+      "icon": "folder"
+    },
+    {
+      "name": "web-vue (⚡)",
+      "command": "npm run start:watch",
+      "cwd": "./web-vue",
+      "description": "Web (Vue) process",
+      "icon": "run"
     }
   ]
 }

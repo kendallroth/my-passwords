@@ -1,0 +1,30 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.web.json",
+  "include": ["src/types/shims/env.d.ts", "src/**/*", "src/**/*.vue"],
+  "exclude": ["src/**/__tests__/*"],
+  "compilerOptions": {
+    "composite": true,
+    "baseUrl": ".",
+    "paths": {
+      "@assets/*": ["src/assets/*"],
+      "@components": ["src/components"],
+      "@components/*": ["src/components/*"],
+      "@composables": ["src/composables"],
+      "@config": ["src/config.ts"],
+      "@localization": ["src/localization"],
+      "@plugins/*": ["src/plugins/*"],
+      "@router": ["src/router"],
+      "@services": ["src/services"],
+      "@services/*": ["src/services/*"],
+      "@stores": ["src/stores"],
+      "@stores/*": ["src/stores/*"],
+      "@styles/*": ["src/styles/*"],
+      "@typings": ["src/types"],
+      "@typings/*": ["src/types/*"],
+      "@utilities": ["src/utilities"],
+      "@utilities/*": ["src/utilities/*"],
+      "@views": ["src/views"],
+      "@views/*": ["src/views/*"]
+    }
+  }
+}
