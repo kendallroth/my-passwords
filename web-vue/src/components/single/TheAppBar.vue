@@ -8,11 +8,18 @@
       clearable
       density="comfortable"
       hide-details
-      placeholder="Search"
+      :placeholder="t('common.appBar.search')"
       :prepend-inner-icon="mdiSearch"
+      readonly
       variant="solo"
     />
     <VSpacer />
+    <VIcon
+      v-visible="fetchingData"
+      class="mr-4 app-bar__fetching"
+      color="green-lighten-3"
+      :icon="mdiNetwork"
+    />
     <VMenu :offset="4">
       <template #activator="{ props }">
         <VBtn class="mr-2" icon v-bind="props">
@@ -58,7 +65,8 @@
 <script setup lang="ts">
 import flagES from "@localization/icons/flag-es.png";
 import flagUS from "@localization/icons/flag-us.png";
-import { mdiAccount, mdiMagnify as mdiSearch, mdiShield } from "@mdi/js";
+import { mdiAccount, mdiWifi as mdiNetwork, mdiMagnify as mdiSearch, mdiShield } from "@mdi/js";
+import { useIsFetching } from "@tanstack/vue-query";
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 
@@ -93,6 +101,8 @@ const currentLanguage = computed(
 const onLanguageSelect = async (code: Languages) => {
   i18n.locale.value = code;
 };
+
+const fetchingData = useIsFetching();
 </script>
 
 <style lang="scss" scoped>

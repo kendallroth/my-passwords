@@ -5,7 +5,8 @@
   "appBar": {
     "menuItems": {
       "logOut": "Cerrar sesión"
-    }
+    },
+    "search": "Buscar"
   },
   "appDrawer": {
     "menuItems": {

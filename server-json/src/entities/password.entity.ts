@@ -42,7 +42,7 @@ const seedPasswords = (): Map<string, Password> => {
       ),
       requirePassword: getRandomFromList([true, false]),
       starredAt: getRandomFromList([null, null, null, dayjs().toISOString()]),
-      username: faker.internet.email(),
+      username: faker.internet.email().toLowerCase(),
     });
   });
 

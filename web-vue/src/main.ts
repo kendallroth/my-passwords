@@ -31,11 +31,13 @@ const vueQueryOptions: VueQueryPluginOptions = {
     defaultOptions: {
       queries: {
         // Queries are considered stale after 1 minute
-        staleTime: 1 * 60,
+        staleTime: 1 * 60 * 1000,
         // Only retry failed requests once
         retry: 1,
         // Reduce repeated fetch requests (especially in development)
         refetchOnWindowFocus: false,
+        // Only refetch when mounting if data is stale
+        refetchOnMount: true,
       },
     },
   },

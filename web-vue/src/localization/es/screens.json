@@ -3,6 +3,14 @@
     "title": "Colecciones"
   },
   "passwordList": {
-    "title": "Contraseñas"
+    "title": "Contraseñas",
+    "table": {
+      "columns": {
+        "name": "Name",
+        "collection": "Collection",
+        "username": "Username",
+        "notes": "Notes"
+      }
+    }
   }
 }

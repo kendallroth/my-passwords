@@ -1,8 +1,29 @@
 diff --git a/node_modules/json-server/lib/server/router/plural.js b/node_modules/json-server/lib/server/router/plural.js
-index 3e898ce..8554c6c 100644
+index 3e898ce..6b6ad4b 100644
 --- a/node_modules/json-server/lib/server/router/plural.js
 +++ b/node_modules/json-server/lib/server/router/plural.js
-@@ -152,7 +152,7 @@ module.exports = (db, name, opts) => {
+@@ -38,12 +38,19 @@ module.exports = (db, name, opts) => {
+ 
+ 
+   function expand(resource, e) {
++    // PATCH: '_expand' params must be an array (not comma-separated string!)
+     e && [].concat(e).forEach(innerResource => {
++      // PATCH: Optional expansions are indicated with '?' char
++      const isOptional= innerResource.endsWith("?");
++      innerResource = innerResource.replace("?", "");
++
+       const plural = pluralize(innerResource);
+ 
+       if (db.get(plural).value()) {
+         const prop = `${innerResource}${opts.foreignKeySuffix}`;
+-        resource[innerResource] = db.get(plural).getById(resource[prop]).value();
++        const idValue = resource[prop];
++        // PATCH: Allow 'expand' to reference optional parent fields (supports null/undefined parents)
++        resource[innerResource] = !isOptional || idValue ? db.get(plural).getById(idValue).value() : null;
+       }
+     });
+   } // GET /name
+@@ -152,7 +159,7 @@ module.exports = (db, name, opts) => {
        chain = chain.orderBy(_sortSet, _orderSet);
      } // Slice result
  
@@ -11,11 +32,11 @@ index 3e898ce..8554c6c 100644
      if (_end || _limit || _page) {
        res.setHeader('X-Total-Count', chain.size());
        res.setHeader('Access-Control-Expose-Headers', `X-Total-Count${_page ? ', Link' : ''}`);
-@@ -200,6 +200,13 @@ module.exports = (db, name, opts) => {
+@@ -200,6 +207,13 @@ module.exports = (db, name, opts) => {
        expand(element, _expand);
      });
      res.locals.data = chain.value();
-+    // NOTE: Pagination is added to all requests but must be actually used in 'router.render'!
++    // PATCH: Pagination is added to all requests but must be actually used in 'router.render'!
 +    res.locals.pagination = {
 +      totalItems,
 +      totalPages: _limit && totalItems > 0 ? Math.ceil(totalItems / _limit) : 1,

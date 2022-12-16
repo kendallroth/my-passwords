@@ -19,6 +19,7 @@
     "@mdi/js": "^7.1.96",
     "@tanstack/vue-query": "^4.20.5",
     "axios": "^1.2.1",
+    "immer": "^9.0.16",
     "pinia": "^2.0.28",
     "uuid": "^9.0.0",
     "vee-validate": "^4.7.3",
