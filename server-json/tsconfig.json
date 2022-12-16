@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "commonjs",
+
+    "resolveJsonModule": true,
+    "rootDir": "./src",
+    "baseUrl": "./src",
+    "outDir": "./dist" /* Specify an output folder for all emitted files. */,
+
+    "paths": {},
+
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+
+    "strict": true,
+    "noImplicitAny": true,
+    "useUnknownInCatchVariables": true,
+
+    "skipLibCheck": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}

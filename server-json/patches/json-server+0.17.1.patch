@@ -1,0 +1,27 @@
+diff --git a/node_modules/json-server/lib/server/router/plural.js b/node_modules/json-server/lib/server/router/plural.js
+index 3e898ce..8554c6c 100644
+--- a/node_modules/json-server/lib/server/router/plural.js
++++ b/node_modules/json-server/lib/server/router/plural.js
+@@ -152,7 +152,7 @@ module.exports = (db, name, opts) => {
+       chain = chain.orderBy(_sortSet, _orderSet);
+     } // Slice result
+ 
+-
++    const totalItems = chain.size().value();
+     if (_end || _limit || _page) {
+       res.setHeader('X-Total-Count', chain.size());
+       res.setHeader('Access-Control-Expose-Headers', `X-Total-Count${_page ? ', Link' : ''}`);
+@@ -200,6 +200,13 @@ module.exports = (db, name, opts) => {
+       expand(element, _expand);
+     });
+     res.locals.data = chain.value();
++    // NOTE: Pagination is added to all requests but must be actually used in 'router.render'!
++    res.locals.pagination = {
++      totalItems,
++      totalPages: _limit && totalItems > 0 ? Math.ceil(totalItems / _limit) : 1,
++      page: _page || 1,
++      size: _limit || 10
++    };
+     next();
+   } // GET /name/:id
+   // GET /name/:id?_embed=&_expand

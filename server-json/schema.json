@@ -1,0 +1,36 @@
+{
+  "accounts": [
+    {
+      "id": "uuid",
+      "email": "string",
+      "password": "string (base64)",
+      "createdAt": "string",
+      "updatedAt": "string | null"
+    }
+  ],
+  "collections": [
+    {
+      "id": "uuid",
+      "accountId": "uuid (fk)",
+      "name": "string",
+      "icon": "string | null",
+      "createdAt": "string",
+      "updatedAt": "string | null"
+    }
+  ],
+  "passwords": [
+    {
+      "id": "uuid",
+      "accountId": "uuid (fk)",
+      "collectionId": "string | null (fk)",
+      "name": "string",
+      "username": "string",
+      "password": "string (base64)",
+      "starredAt": "date | null",
+      "requireReprompt": "boolean",
+      "notes": "string | null",
+      "createdAt": "string",
+      "updatedAt": "string | null"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "autorun": false,
+  "autokill": true,
+  "terminals": [
+    {
+      "name": "root",
+      "description": "Root directory",
+      "focus": true,
+      "icon": "repo"
+    },
+    {
+      "name": "server-json",
+      "cwd": "./server-json",
+      "description": "Server (JSON) directory",
+      "icon": "folder"
+    },
+    {
+      "name": "server-json (⚡)",
+      "command": "npm run start:watch",
+      "cwd": "./server-json",
+      "description": "Server (JSON) process",
+      "icon": "run"
+    }
+  ]
+}
