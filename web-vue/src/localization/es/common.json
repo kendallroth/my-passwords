@@ -1,0 +1,22 @@
+{
+  "app": {
+    "title": "My Passwords"
+  },
+  "appBar": {
+    "menuItems": {
+      "logOut": "Cerrar sesión"
+    }
+  },
+  "appDrawer": {
+    "menuItems": {
+      "collapse": "Colapsar",
+      "collections": "Colecciones",
+      "passwords": "Contraseñas",
+      "settings": "Ajustes"
+    }
+  },
+  "errors": {
+    "notImplementedYet": "Aun no implementado"
+  }
+}
+

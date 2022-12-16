@@ -1,5 +1,21 @@
 {
   "app": {
     "title": "My Passwords"
+  },
+  "appBar": {
+    "menuItems": {
+      "logOut": "Log Out"
+    }
+  },
+  "appDrawer": {
+    "menuItems": {
+      "collapse": "Collapse",
+      "collections": "Collections",
+      "passwords": "Passwords",
+      "settings": "Settings"
+    }
+  },
+  "errors": {
+    "notImplementedYet": "Not implemented yet"
   }
 }

@@ -1,4 +1,5 @@
 import { onBeforeUnmount, reactive, ref } from "vue";
+import { useI18n } from "vue-i18n";
 
 interface UseSnackbar {
   notify: (message: string, type?: SnackbarType | null) => void;
@@ -27,6 +28,8 @@ const SNACKBAR_DURATION = 4000;
 
 /** Snackbar notification utility */
 const useSnackbar = (): UseSnackbar => {
+  const { t } = useI18n();
+
   const snackbarTimeout = ref<number | undefined>();
 
   onBeforeUnmount(() => {
@@ -53,7 +56,7 @@ const useSnackbar = (): UseSnackbar => {
   };
 
   const notifyError = (message: string) => notify(message, "error");
-  const notifyNotImplemented = () => notify("Not implemented yet", "error");
+  const notifyNotImplemented = () => notify(t("common.errors.notImplementedYet"), "error");
   const notifySuccess = (message: string) => notify(message, "success");
   const notifyWarning = (message: string) => notify(message, "warning");
 

@@ -29,7 +29,7 @@
     },
     {
       "name": "web-vue (⚡)",
-      "command": "npm run start:watch",
+      "command": "npm run dev",
       "cwd": "./web-vue",
       "description": "Web (Vue) process",
       "icon": "run"
