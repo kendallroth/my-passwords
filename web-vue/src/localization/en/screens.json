@@ -5,6 +5,9 @@
   "dashboard": {
     "title": "Dashboard"
   },
+  "notFound": {
+    "title": "Page Not Found"
+  },
   "passwordList": {
     "title": "Passwords",
     "table": {
