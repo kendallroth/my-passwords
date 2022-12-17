@@ -12,12 +12,13 @@
     "menuItems": {
       "collapse": "Collapse",
       "collections": "Collections",
+      "dashboard": "Dashboard",
       "passwords": "Passwords",
       "settings": "Settings"
     }
   },
   "errors": {
     "noItems": "No items found",
-    "notImplementedYet": "Not implemented yet"
+    "notImplemented": "Not implemented yet"
   }
 }

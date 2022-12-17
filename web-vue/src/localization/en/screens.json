@@ -2,6 +2,9 @@
   "collectionList": {
     "title": "Collections"
   },
+  "dashboard": {
+    "title": "Dashboard"
+  },
   "passwordList": {
     "title": "Passwords",
     "table": {
@@ -12,5 +15,8 @@
         "notes": "Notes"
       }
     }
+  },
+  "settings": {
+    "title": "Settings"
   }
 }

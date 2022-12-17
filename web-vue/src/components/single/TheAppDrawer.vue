@@ -30,7 +30,8 @@
         <VListItem
           :prepend-icon="mdiSettings"
           :title="t('common.appDrawer.menuItems.settings')"
-          @click.stop="notifyNotImplemented"
+          to="/settings"
+          @click.stop
         />
       </VList>
     </template>
@@ -42,6 +43,7 @@ import {
   mdiChevronLeft,
   mdiChevronRight,
   mdiFolderOpen as mdiCollection,
+  mdiViewDashboard as mdiDashboard,
   mdiFormTextboxPassword as mdiPassword,
   mdiCog as mdiSettings,
 } from "@mdi/js";
@@ -57,6 +59,7 @@ interface DrawerMenuItem {
 }
 
 const drawerMenuItems: DrawerMenuItem[] = [
+  { icon: mdiDashboard, labelKey: "dashboard", link: "/dashboard" },
   { icon: mdiPassword, labelKey: "passwords", link: "/passwords" },
   { icon: mdiCollection, labelKey: "collections", link: "/collections" },
 ];

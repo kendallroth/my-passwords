@@ -40,6 +40,7 @@
         <VListItem
           v-for="language in languageList"
           :key="language.code"
+          :active="language.code === currentLanguage.code"
           :title="language.title"
           @click="setLocale(language.code)"
         >

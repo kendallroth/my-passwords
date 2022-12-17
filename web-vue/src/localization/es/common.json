@@ -17,8 +17,7 @@
     }
   },
   "errors": {
-    "noItems": "No items found",
-    "notImplementedYet": "Aun no implementado"
+    "notImplemented": "Aun no implementado"
   }
 }
 

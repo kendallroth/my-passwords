@@ -56,7 +56,7 @@ const useSnackbar = (): UseSnackbar => {
   };
 
   const notifyError = (message: string) => notify(message, "error");
-  const notifyNotImplemented = () => notify(t("common.errors.notImplementedYet"), "error");
+  const notifyNotImplemented = () => notify(t("common.errors.notImplemented"), "error");
   const notifySuccess = (message: string) => notify(message, "success");
   const notifyWarning = (message: string) => notify(message, "warning");
 
