@@ -54,7 +54,7 @@ const { getErrorMessage } = useErrors();
 
 const fetchCollections = async (): Promise<Collection[]> => {
   await sleep(500);
-  const { data } = await ApiService.api.get("/collections");
+  const { data } = await ApiService.api.get("/collections", { params: { _sort: "name" } });
   return data as Collection[];
 };
 

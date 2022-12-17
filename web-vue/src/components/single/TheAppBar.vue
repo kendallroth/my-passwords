@@ -22,7 +22,7 @@
     <VIcon
       v-visible="fetchingData"
       class="mr-4 app-bar__fetching"
-      color="green-lighten-3"
+      color="deep-purple-lighten-4"
       :icon="mdiNetwork"
     />
     <VMenu :offset="4">

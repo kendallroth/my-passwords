@@ -75,9 +75,11 @@ interface PasswordTableColumn {
 const page = ref(1);
 const fetchPasswords = async (): Promise<PaginatedResult<Password>> => {
   await sleep(500);
-  const { data } = await ApiService.api.get("/passwords?_expand=collection?", {
+  const { data } = await ApiService.api.get("/passwords", {
     params: {
+      _expand: "collection?",
       _page: page.value,
+      _sort: "name",
     },
   });
   return data as PaginatedResult<Password>;
