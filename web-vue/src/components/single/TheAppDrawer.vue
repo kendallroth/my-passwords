@@ -25,6 +25,7 @@
       />
     </VList>
     <template #append>
+      <VDivider />
       <VList nav>
         <VListItem
           :prepend-icon="mdiSettings"

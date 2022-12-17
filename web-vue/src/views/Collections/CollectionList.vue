@@ -38,7 +38,7 @@
 <script setup lang="ts">
 import { mdiRefresh } from "@mdi/js";
 import { useQuery } from "@tanstack/vue-query";
-import { computed, onMounted, onUnmounted, reactive } from "vue";
+import { computed, reactive } from "vue";
 import { useI18n } from "vue-i18n";
 
 import { ActionBar } from "@components/layout";
@@ -71,13 +71,12 @@ const filteredCollections = computed(() => {
   return value.filter((c) => c.name.toLowerCase().includes(search.toLowerCase()));
 });
 
-const appSearch = reactive(useAppSearch());
-onMounted(() => {
-  appSearch.clear();
-});
-onUnmounted(() => {
-  appSearch.clear();
-});
+const appSearch = reactive(
+  useAppSearch({
+    mountAction: "show",
+    unmountAction: "hide",
+  }),
+);
 </script>
 
 <style lang="scss" scoped></style>

@@ -1,4 +1,4 @@
-import { reactive, toRefs } from "vue";
+import { onMounted, onUnmounted, reactive, toRefs } from "vue";
 
 import type { Ref } from "vue";
 
@@ -25,44 +25,53 @@ interface UseAppSearch {
   shown: Ref<boolean>;
 }
 
-interface UseAppSearchProps {
-  onChange?: (value: string) => void;
-  onClear?: () => string;
+type VisibilityAction = "show" | "hide";
 
-  onHide?: () => void;
-  onShow?: () => void;
-  onToggle?: (shown: boolean) => void;
+interface UseAppSearchProps {
+  mountAction?: VisibilityAction;
+  unmountAction?: VisibilityAction;
 }
 
 /** Global app search state */
 const appSearchState = reactive({
   text: "",
-  shown: true,
+  shown: false,
 });
 
 const useAppSearch = (props?: UseAppSearchProps): UseAppSearch => {
+  const { mountAction, unmountAction } = props ?? {};
+
   // TODO: Likely support wiping/clearing text when changing routes...
+
+  onMounted(() => {
+    if (mountAction !== undefined) {
+      toggleSearch(mountAction === "show");
+      clearSearch();
+    }
+  });
+
+  onUnmounted(() => {
+    if (unmountAction !== undefined) {
+      toggleSearch(unmountAction === "show");
+      clearSearch();
+    }
+  });
 
   const clearSearch = () => {
     appSearchState.text = "";
-    props?.onClear?.();
   };
   const changeSearch = (input: string) => {
     appSearchState.text = input;
-    props?.onChange?.(input);
   };
 
   const hideSearch = () => {
     appSearchState.shown = false;
-    props?.onHide?.();
   };
   const showSearch = () => {
     appSearchState.shown = true;
-    props?.onShow?.();
   };
   const toggleSearch = (open: boolean) => {
     appSearchState.shown = open;
-    props?.onToggle?.(open);
   };
 
   return {

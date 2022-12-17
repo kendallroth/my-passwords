@@ -3,19 +3,21 @@
     <!-- <v-app-bar-nav-icon @click="drawerRailMode = !drawerRailMode" /> -->
     <VIcon class="ml-4" color="white" :icon="mdiShield" />
     <VToolbarTitle>{{ t("common.app.title") }}</VToolbarTitle>
-    <VTextField
-      v-if="appSearch.shown"
-      class="app-bar__search"
-      clearable
-      density="comfortable"
-      hide-details
-      :model-value="appSearch.text"
-      :placeholder="t('common.appBar.search')"
-      :prepend-inner-icon="mdiSearch"
-      variant="solo"
-      @click:clear="appSearch.clear"
-      @update:model-value="appSearch.change"
-    />
+    <VFadeTransition>
+      <VTextField
+        v-if="appSearch.shown"
+        class="app-bar__search"
+        clearable
+        density="comfortable"
+        hide-details
+        :model-value="appSearch.text"
+        :placeholder="t('common.appBar.search')"
+        :prepend-inner-icon="mdiSearch"
+        variant="solo"
+        @click:clear="appSearch.clear"
+        @update:model-value="appSearch.change"
+      />
+    </VFadeTransition>
     <VSpacer />
     <VIcon
       v-visible="fetchingData"
