@@ -9,16 +9,16 @@
       "icon": "repo"
     },
     {
-      "name": "server-json",
-      "cwd": "./server-json",
-      "description": "Server (JSON) directory",
+      "name": "server-express",
+      "cwd": "./server-express",
+      "description": "Server (Express) directory",
       "icon": "folder"
     },
     {
-      "name": "server-json (⚡)",
-      "command": "npm run start:watch",
-      "cwd": "./server-json",
-      "description": "Server (JSON) process",
+      "name": "server-express (⚡)",
+      "command": "npm run start:dev",
+      "cwd": "./server-expresss",
+      "description": "Server (Express) process",
       "icon": "run"
     },
     {

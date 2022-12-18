@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "commonjs",
+
+    "resolveJsonModule": true,
+    "rootDir": "./src",
+    "baseUrl": "./src",
+    "outDir": "./dist" /* Specify an output folder for all emitted files. */,
+
+    "paths": {
+      "@common/*": ["common/*"],
+      "@database": ["database"],
+      "@resources/*": ["resources/*"],
+    },
+
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+
+    "strict": true,
+    "noImplicitAny": true,
+    "useUnknownInCatchVariables": true,
+
+    "skipLibCheck": true
+  },
+  "include": ["src", ".eslintrc.js"],
+  "exclude": ["node_modules"],
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  }
+}

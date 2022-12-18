@@ -47,20 +47,22 @@ import { ApiService } from "@services";
 import { sleep } from "@utilities";
 
 import type { Collection } from "@typings/collection.types";
+import type { PaginatedResult } from "@typings/pagination.types";
 
 const { t } = useI18n();
 const { notifyNotImplemented } = useSnackbar();
 const { getErrorMessage } = useErrors();
 
-const fetchCollections = async (): Promise<Collection[]> => {
+const fetchCollections = async (): Promise<PaginatedResult<Collection>> => {
   await sleep(500);
-  const { data } = await ApiService.api.get("/collections", { params: { _sort: "name" } });
-  return data as Collection[];
+  const { data } = await ApiService.api.get("/collection", { params: { sort: "name" } });
+  return data as PaginatedResult<Collection>;
 };
 
 const collectionsQuery = useQuery({
   queryKey: ["collections"],
   queryFn: fetchCollections,
+  select: (paginated) => paginated.data,
 });
 
 const filteredCollections = computed(() => {

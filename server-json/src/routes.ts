@@ -15,7 +15,8 @@ export const configureUnauthenticatedRoutes = (server: Server, database: Databas
       return res.status(401).json({ message: "Unauthenticated" });
     }
 
-    return res.status(200).json(account);
+    const token = Buffer.from(`${username}:${password}`).toString("base64");
+    return res.status(200).json({ account, token });
   });
 };
 
