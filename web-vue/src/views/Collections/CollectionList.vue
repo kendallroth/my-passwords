@@ -55,7 +55,7 @@ const { getErrorMessage } = useErrors();
 
 const fetchCollections = async (): Promise<PaginatedResult<Collection>> => {
   await sleep(500);
-  const { data } = await ApiService.api.get("/collection", { params: { sort: "name" } });
+  const { data } = await ApiService.api.get("/collection", { params: { sort: "name", size: 100 } });
   return data as PaginatedResult<Collection>;
 };
 

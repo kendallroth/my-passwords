@@ -3,6 +3,7 @@ import cors from "cors";
 import express from "express";
 import HttpStatus from "http-status";
 
+import { accountRouter } from "@resources/account/account.controller";
 import { collectionRouter } from "@resources/collection/collection.controller";
 import { passwordRouter } from "@resources/password/password.controller";
 
@@ -20,6 +21,7 @@ server.get("/", (req, res) => {
   res.status(HttpStatus.OK).send();
 });
 
+server.use("/account", accountRouter);
 server.use("/collection", collectionRouter);
 server.use("/password", passwordRouter);
 
