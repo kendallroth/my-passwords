@@ -1,5 +1,7 @@
 import dayjs from "dayjs";
 
+import { mapToArray } from "@common/utilities/map.util";
+
 import { encryptPassword } from "../password/password.util";
 import { stubAccount } from "./account.entity";
 
@@ -14,15 +16,15 @@ const seedAccounts = (): Map<string, Account> => {
   const accountList: Account[] = [
     stubAccount({
       createdAt: dayjs().subtract(48, "day").toISOString(),
+      email: "admin@example.com",
       id: seedAccountIds["admin"],
       password: encryptPassword("Passw0rd!", seedAccountIds["admin"]),
-      username: "admin",
     }),
     stubAccount({
       createdAt: dayjs().subtract(19, "day").toISOString(),
+      email: "dummy@example.com",
       id: seedAccountIds["dummy"],
       password: encryptPassword("Passw0rd@", seedAccountIds["dummy"]),
-      username: "dummy",
     }),
   ];
 
@@ -30,4 +32,4 @@ const seedAccounts = (): Map<string, Account> => {
 };
 
 export const seededAccountMap = seedAccounts();
-export const seededAccountList = Array.from(seededAccountMap.values());
+export const seededAccountList = mapToArray(seededAccountMap);

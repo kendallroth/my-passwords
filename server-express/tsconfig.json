@@ -11,10 +11,13 @@
     "paths": {
       "@common/*": ["common/*"],
       "@database": ["database"],
+      "@middleware": ["middleware"],
+      "@types/*": ["types/*"],
       "@resources/*": ["resources/*"],
     },
 
     "esModuleInterop": true,
+    "typeRoots": ["./src/types", "./node_modules/@types"],
     "forceConsistentCasingInFileNames": true,
 
     "strict": true,

@@ -1,4 +1,4 @@
-import { defineStore } from "pinia";
+import { acceptHMRUpdate, defineStore } from "pinia";
 import { ref } from "vue";
 
 export type AppTheme = "light" | "dark";
@@ -35,3 +35,7 @@ const setupStore = () => {
 export const useAppStore = defineStore("app", setupStore, {
   persist: true,
 });
+
+if (import.meta.hot) {
+  import.meta.hot.accept(acceptHMRUpdate(useAppStore, import.meta.hot));
+}

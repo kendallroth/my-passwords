@@ -1,5 +1,13 @@
 import type { Collection } from "./collection.types";
 
+export type PasswordStrength = "none" | "weak" | "average" | "strong" | "exceptional";
+
+export class PasswordStats {
+  color!: string;
+  strength!: PasswordStrength;
+  score!: number;
+}
+
 export interface Password {
   id: string;
   createdAt: string;
@@ -10,6 +18,7 @@ export interface Password {
   password: string;
   requirePassword: boolean;
   starredAt: string | null;
+  stats: PasswordStats;
   username: string;
   collection?: Collection;
 }

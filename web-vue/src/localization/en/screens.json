@@ -5,6 +5,21 @@
   "dashboard": {
     "title": "Dashboard"
   },
+  "login": {
+    "title": "Login",
+    "actions": {
+      "forgotPassword": "Forgot Password?",
+      "login": "Login"
+    },
+    "fields": {
+      "email": "Email",
+      "password": "Password"
+    }
+  },
+  "logout": {
+    "title": "Goodbye!",
+    "content": "Logging out"
+  },
   "notFound": {
     "title": "Page Not Found"
   },
@@ -12,10 +27,11 @@
     "title": "Passwords",
     "table": {
       "columns": {
-        "name": "Name",
+        "age": "Age",
         "collection": "Collection",
-        "username": "Username",
-        "notes": "Notes"
+        "name": "Name",
+        "strength": "Strength",
+        "username": "Username"
       }
     }
   },

@@ -1,7 +1,7 @@
 import { EntityBase, stubEntity } from "@common/entity/base.entity";
 
 export class Account extends EntityBase {
-  username!: string;
+  email!: string;
   /** Passwords must be encoded before being saved! */
   password!: string;
 }

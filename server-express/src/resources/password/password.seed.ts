@@ -2,13 +2,14 @@ import { faker } from "@faker-js/faker";
 import dayjs from "dayjs";
 
 import { createList } from "@common/utilities/list.util";
+import { mapToArray } from "@common/utilities/map.util";
 import { getRandomFromList, getRandomFromRange } from "@common/utilities/random.util";
 import { capitalizeWords } from "@common/utilities/string.util";
 import { seedCollectionIds, seededCollectionList } from "@resources/collection/collection.seed";
 
 import { seedAccountIds, seededAccountList } from "../account/account.seed";
 import { stubPassword } from "./password.entity";
-import { encryptPassword } from "./password.util";
+import { checkPasswordStrength, encryptPassword } from "./password.util";
 
 import type { Password } from "./password.entity";
 
@@ -20,19 +21,25 @@ export const seedPasswordIds = {
 const seedPasswords = (): Map<string, Password> => {
   const randomPasswords = createList<Password>(50, () => {
     const randomAccount = getRandomFromList(seededAccountList);
+    const randomPassword = faker.internet.password(getRandomFromRange(8, 24));
 
     return stubPassword({
       accountId: randomAccount.id,
       collectionId: getRandomFromList([...seededCollectionList, null])?.id ?? null,
+      createdAt: faker.date
+        .between(dayjs().subtract(2, "year").toISOString(), dayjs().toISOString())
+        .toISOString(),
       name: capitalizeWords(faker.word.noun()),
       notes: getRandomFromList([null, faker.lorem.words(getRandomFromRange(5, 20))]),
-      password: encryptPassword(
-        faker.internet.password(getRandomFromRange(8, 24)),
-        randomAccount.id,
-      ),
+      password: encryptPassword(randomPassword, randomAccount.id),
       requirePassword: getRandomFromList([true, false]),
+      stats: checkPasswordStrength(randomPassword),
       starredAt: getRandomFromList([null, null, null, dayjs().toISOString()]),
-      username: faker.internet.email().toLowerCase(),
+      username: getRandomFromList([
+        randomAccount.email,
+        faker.internet.email().toLowerCase(),
+        faker.internet.userName().toLowerCase(),
+      ]),
     });
   });
 
@@ -45,6 +52,7 @@ const seedPasswords = (): Map<string, Password> => {
       notes: null,
       password: encryptPassword("Passw0rd!", seedAccountIds["admin"]),
       requirePassword: false,
+      stats: checkPasswordStrength("Passw0rd!"),
       starredAt: dayjs().subtract(2, "day").toISOString(),
       username: "admin@example.com",
     }),
@@ -56,6 +64,7 @@ const seedPasswords = (): Map<string, Password> => {
       notes: "Some notes about this password",
       password: encryptPassword("Sampl3!", seedAccountIds["admin"]),
       requirePassword: true,
+      stats: checkPasswordStrength("Sampl3!"),
       starredAt: null,
       username: "test@example.com",
     }),
@@ -66,4 +75,4 @@ const seedPasswords = (): Map<string, Password> => {
 };
 
 export const seededPasswordMap = seedPasswords();
-export const seededPasswordList = Array.from(seededPasswordMap.values());
+export const seededPasswordList = mapToArray(seededPasswordMap);

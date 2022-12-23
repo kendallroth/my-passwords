@@ -1,35 +1,50 @@
-import database from "@database";
 import { Router } from "express";
-import { sort } from "fast-sort";
+import type { Request, Response } from "express";
+import jwt from "jsonwebtoken";
 
-import { paginate } from "@common/utilities/pagination.util";
-import { getSortParams } from "@common/utilities/sort.util";
+import { UnauthorizedError } from "@common/errors";
+import { sleep } from "@common/utilities/sleep.util";
+import database from "@database";
+import { authRequest, JWT_SECRET } from "@middleware";
+
+import { getAccountByCredentials, getAccountById } from "./account.util";
 
 import type { Account } from "./account.entity";
-import type { PaginatedResult } from "@common/types/pagination.types";
-import type { Request, Response } from "express";
 
 export const accountRouter = Router();
 
-// TODO: Secure behind devops header check
-accountRouter.get(
-  "/",
-  (
-    req: Request<unknown, unknown, unknown, { sort?: string }>,
-    res: Response<PaginatedResult<Account>>,
+accountRouter.get("/", authRequest, async (req: Request, res: Response<Account | null>) => {
+  const account = getAccountById(database, req.account!.id)!;
+
+  await sleep(1000);
+
+  return res.json(account);
+});
+
+accountRouter.post(
+  "/login",
+  async (
+    req: Request<unknown, unknown, { email: string; password: string }>,
+    res: Response<{ token: string }>,
   ) => {
-    const accountsRef = database.data!.accounts;
-    const accounts = Array.from(accountsRef.values());
+    const { email, password } = req.body;
 
-    const sortKeys = ["name"];
-    const sortList = getSortParams(req.query.sort, sortKeys, "name");
-    const sortedAccounts = sortList.length ? sort(accounts).by(sortList) : accounts;
+    await sleep(500);
 
-    const paginatedCollections = paginate(sortedAccounts, {
-      page: 1,
-      size: 10,
-    });
+    const account = getAccountByCredentials(database, email, password);
+    if (!account) {
+      throw new UnauthorizedError("Invalid credentials");
+    }
 
-    res.json(paginatedCollections);
+    const token = jwt.sign(
+      {
+        accountId: account.id,
+        email: account.email,
+      },
+      JWT_SECRET,
+      { expiresIn: "1d" },
+    );
+
+    return res.json({ token });
   },
 );

@@ -1,8 +1,18 @@
 {
+  "actions": {
+    "cancel": "Cancelar",
+    "confirm": "Confirmar"
+  },
   "app": {
-    "title": "My Passwords"
+    "title": "Mis Contraseñas"
   },
   "appBar": {
+    "dialogs": {
+      "logout": {
+        "title": "¿Cerrar sesión?",
+        "content": "¿Estás seguro de que quieres cerrar sesión?"
+      }
+    },
     "menuItems": {
       "logOut": "Cerrar sesión"
     },
@@ -12,12 +22,22 @@
     "menuItems": {
       "collapse": "Colapsar",
       "collections": "Colecciones",
+      "dashboard": "Tablero",
       "passwords": "Contraseñas",
       "settings": "Ajustes"
     }
   },
   "errors": {
+    "noItems": "No se encontraron artículos",
     "notImplemented": "Aun no implementado"
+  },
+  "validations": {
+    "invalid": "{path} es inválido",
+    "invalidType": "{path} debe ser {type}",
+    "match": "{path} tiene formato inválido",
+    "required": "{path} es requerido",
+    "stringEmail": "{path} debe ser un correo electrónico válido.",
+    "stringMin": "{path} debe tener al menos {min} caracteres"
   }
 }
 

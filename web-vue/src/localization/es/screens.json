@@ -2,6 +2,27 @@
   "collectionList": {
     "title": "Colecciones"
   },
+  "dashboard": {
+    "title": "Tablero"
+  },
+  "login": {
+    "title": "Acceso",
+    "actions": {
+      "forgotPassword": "¿Has olvidado tu contraseña?",
+      "login": "Acceso"
+    },
+    "fields": {
+      "email": "Correo electrónico",
+      "password": "Clave"
+    }
+  },
+  "logout": {
+    "title": "¡Adiós!",
+    "content": "Saliendo de tu cuenta"
+  },
+  "notFound": {
+    "title": "Página no encontrada"
+  },
   "passwordList": {
     "title": "Contraseñas"
   },

@@ -33,7 +33,7 @@ const getErrorCode = (error: unknown): string | null => {
   }
 
   // API errors are returned in an interesting nested format
-  if (error.response && error.response.data) {
+  if (error?.response?.data) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return (error.response.data as any).code;
   }

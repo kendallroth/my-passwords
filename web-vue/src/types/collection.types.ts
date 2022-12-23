@@ -3,4 +3,6 @@ export interface Collection {
   createdAt: string;
   icon: string | null;
   name: string;
+
+  passwords?: number;
 }

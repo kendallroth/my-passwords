@@ -30,6 +30,7 @@ module.exports = {
         pathGroups: [
           // Example: TS aliases are automatically categorized as 'internal' paths by plugin!
           // { pattern: "@{app,common,modules,typings}/**", group: "external", position: "after" }
+          { pattern: "express", group: "external" },
         ],
         // Order import groups (can group multiple together)
         groups: [

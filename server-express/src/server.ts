@@ -3,11 +3,14 @@ import cors from "cors";
 import express from "express";
 import HttpStatus from "http-status";
 
+// NOTE: Patches Express routes to support errors in async flows
+import "express-async-errors";
+
 import { accountRouter } from "@resources/account/account.controller";
 import { collectionRouter } from "@resources/collection/collection.controller";
 import { passwordRouter } from "@resources/password/password.controller";
 
-import { requestLogger } from "./middleware/logger.middleware";
+import { errorHandler, requestLogger } from "./middleware";
 
 const port = 5001;
 
@@ -24,6 +27,8 @@ server.get("/", (req, res) => {
 server.use("/account", accountRouter);
 server.use("/collection", collectionRouter);
 server.use("/password", passwordRouter);
+
+server.use(errorHandler);
 
 server.listen(port, () => {
   console.log(`⚡ Server is running on port '${port}'`);

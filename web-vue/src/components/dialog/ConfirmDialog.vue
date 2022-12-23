@@ -8,7 +8,7 @@
       <VCardActions>
         <ActionBar right>
           <VBtn v-if="type === 'confirm'" :disabled="loading" @click="handleCancel">
-            {{ cancelText ?? "Cancel" }}
+            {{ cancelText ?? t("common.actions.cancel") }}
           </VBtn>
           <VBtn
             :color="confirmColor"
@@ -16,7 +16,7 @@
             :loading="loading"
             @click="handleConfirm"
           >
-            {{ confirmText ?? "Confirm" }}
+            {{ confirmText ?? t("common.actions.confirm") }}
           </VBtn>
         </ActionBar>
       </VCardActions>
@@ -25,6 +25,8 @@
 </template>
 
 <script lang="ts" setup>
+import { useI18n } from "vue-i18n";
+
 import { ActionBar } from "@components/layout";
 
 type ConfirmDialogProps = {
@@ -62,6 +64,8 @@ const emit = defineEmits<{
   (event: "confirm"): void;
   (event: "cancel"): void;
 }>();
+
+const { t } = useI18n();
 
 const handleCancel = () => {
   emit("cancel");

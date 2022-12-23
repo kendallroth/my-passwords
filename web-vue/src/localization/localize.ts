@@ -1,9 +1,11 @@
 import { createI18n } from "vue-i18n";
+import { setLocale as setYupLocale } from "yup";
 
 import enCommon from "./en/common.json";
 import enScreens from "./en/screens.json";
 import esCommon from "./es/common.json";
 import esScreens from "./es/screens.json";
+import { yupLocale } from "./yup-locale";
 
 export type Languages = keyof typeof messages;
 
@@ -36,7 +38,7 @@ export const detectLocale = (): Languages => {
 };
 
 /** NOTE: Does not actually set the locale (managed through hooks) */
-export const setLocale = (locale: Languages) => {
+export const setAppLocale = (locale: Languages) => {
   i18nPlugin.global.locale.value = locale;
 
   localStorage.setItem(I18N_KEY, locale);
@@ -49,5 +51,7 @@ const i18nPlugin = createI18n({
   fallbackLocale: "en", // set fallback locale
   messages,
 });
+
+setYupLocale(yupLocale);
 
 export { i18nPlugin };

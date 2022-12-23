@@ -12,5 +12,6 @@ rootPiniaStore.use(
 
 export { rootPiniaStore };
 
+export { useAccountStore } from "./account.store";
 export { useAppStore } from "./app.store";
 export type { AppTheme } from "./app.store";

@@ -1,5 +1,7 @@
 import dayjs from "dayjs";
 
+import { mapToArray } from "@common/utilities/map.util";
+
 import { seedAccountIds } from "../account/account.seed";
 import { stubCollection } from "./collection.entity";
 
@@ -40,4 +42,4 @@ const seedCollections = (): Map<string, Collection> => {
 };
 
 export const seededCollectionMap = seedCollections();
-export const seededCollectionList = Array.from(seededCollectionMap.values());
+export const seededCollectionList = mapToArray(seededCollectionMap);

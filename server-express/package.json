@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "format": "prettier --ignore-path ../.gitignore --write \"src/**/*.{json,ts}\"",
-    "lint": "eslint --ignore-path ../.gitignore --fix --ext .ts .",
+    "lint": "eslint --ignore-path .gitignore \"src/**/*.ts\"",
+    "lint:fix": "npm run lint -- --fix",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "ts-node src/server.ts",
     "start:watch": "nodemon --exec ts-node src/server.ts"
@@ -16,14 +17,18 @@
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
     "@types/cors": "^2.8.13",
+    "@types/jsonwebtoken": "^8.5.9",
     "body-parser": "^1.20.1",
+    "check-password-strength": "^2.0.7",
     "cors": "^2.8.5",
     "crypto-js": "^4.1.1",
     "dayjs": "^1.11.7",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
     "fast-sort": "^3.2.0",
     "http-status": "^1.5.3",
+    "jsonwebtoken": "^8.5.1",
     "lowdb": "github:dankreiger/lowdb#chore/esm-cjs-hybrid-WITH-LIB",
     "uuid": "^9.0.0"
   },

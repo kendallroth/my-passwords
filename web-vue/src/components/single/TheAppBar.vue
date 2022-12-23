@@ -3,21 +3,23 @@
     <!-- <v-app-bar-nav-icon @click="drawerRailMode = !drawerRailMode" /> -->
     <VIcon class="ml-4" color="white" :icon="mdiShield" />
     <VToolbarTitle>{{ t("common.app.title") }}</VToolbarTitle>
-    <VFadeTransition>
-      <VTextField
-        v-if="appSearch.shown"
-        class="app-bar__search"
-        clearable
-        density="comfortable"
-        hide-details
-        :model-value="appSearch.text"
-        :placeholder="t('common.appBar.search')"
-        :prepend-inner-icon="mdiSearch"
-        variant="solo"
-        @click:clear="appSearch.clear"
-        @update:model-value="appSearch.change"
-      />
-    </VFadeTransition>
+    <template v-if="accountStore.authenticated">
+      <VFadeTransition>
+        <VTextField
+          v-if="appSearch.shown"
+          class="app-bar__search"
+          clearable
+          density="comfortable"
+          hide-details
+          :model-value="appSearch.text"
+          :placeholder="t('common.appBar.search')"
+          :prepend-inner-icon="mdiSearch"
+          variant="solo"
+          @click:clear="appSearch.clear"
+          @update:model-value="appSearch.change"
+        />
+      </VFadeTransition>
+    </template>
     <VSpacer />
     <VIcon
       v-visible="fetchingData"
@@ -42,7 +44,7 @@
           :key="language.code"
           :active="language.code === currentLanguage.code"
           :title="language.title"
-          @click="setLocale(language.code)"
+          @click="setAppLocale(language.code)"
         >
           <template #prepend>
             <VAvatar
@@ -55,16 +57,26 @@
         </VListItem>
       </VList>
     </VMenu>
-    <VMenu :offset="4">
-      <template #activator="{ props }">
-        <VBtn :icon="mdiAccount" v-bind="props" />
-      </template>
-      <VList :min-width="200">
-        <VListItem @click="notifyNotImplemented">
-          {{ t("common.appBar.menuItems.logOut") }}
-        </VListItem>
-      </VList>
-    </VMenu>
+    <template v-if="accountStore.authenticated">
+      <VMenu :offset="4">
+        <template #activator="{ props }">
+          <VBtn :icon="mdiAccount" v-bind="props" />
+        </template>
+        <VList :min-width="200">
+          <VListItem @click="logoutDialog.show()">
+            {{ t("common.appBar.menuItems.logOut") }}
+          </VListItem>
+        </VList>
+      </VMenu>
+      <ConfirmDialog
+        :model-value="logoutDialog.open.value"
+        :title="t('common.appBar.dialogs.logout.title')"
+        @cancel="logoutDialog.hide"
+        @confirm="handleLogout"
+      >
+        {{ t("common.appBar.dialogs.logout.content") }}
+      </ConfirmDialog>
+    </template>
   </VAppBar>
 </template>
 
@@ -75,16 +87,19 @@ import { mdiAccount, mdiWifi as mdiNetwork, mdiMagnify as mdiSearch, mdiShield }
 import { useIsFetching } from "@tanstack/vue-query";
 import { computed, reactive } from "vue";
 import { useI18n } from "vue-i18n";
+import { useRouter } from "vue-router";
 
-import { useAppSearch, useSnackbar } from "@composables";
-import { setLocale } from "@localization";
+import { useAppSearch, useDialog } from "@composables";
+import { setAppLocale } from "@localization";
+import { AuthService } from "@services";
+import { useAccountStore } from "@stores";
 
 import type { Languages } from "@localization";
 
 const appSearch = reactive(useAppSearch());
+const accountStore = useAccountStore();
 
 const { t, ...i18n } = useI18n();
-const { notifyNotImplemented } = useSnackbar();
 interface LanguageOption {
   code: Languages;
   flag: string;
@@ -109,6 +124,14 @@ const currentLanguage = computed(
 
 // Used to display an indicator when any app data is fetching
 const fetchingData = useIsFetching();
+
+const logoutDialog = useDialog();
+const router = useRouter();
+
+const handleLogout = () => {
+  logoutDialog.hide();
+  router.push("/auth/logout");
+};
 </script>
 
 <style lang="scss" scoped>

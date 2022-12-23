@@ -1,0 +1,4 @@
+/** Apply spacing multiplier (defaults to 8px per step) */
+@function spacing($multiplier) {
+  @return #{$spacing * $multiplier}px;
+}

@@ -5,7 +5,7 @@ import type {
   Pagination,
   PaginationInput,
   PaginationQuery,
-} from "@common/types/pagination.types";
+} from "types/pagination.types";
 
 /** Default pagination page size */
 export const PAGINATION_PAGE_SIZE_DEFAULT = 10;

@@ -1,8 +1,18 @@
 {
+  "actions": {
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  },
   "app": {
     "title": "My Passwords"
   },
   "appBar": {
+    "dialogs": {
+      "logout": {
+        "title": "Logout?",
+        "content": "Are you sure you want to log out?"
+      }
+    },
     "menuItems": {
       "logOut": "Log Out"
     },
@@ -20,5 +30,13 @@
   "errors": {
     "noItems": "No items found",
     "notImplemented": "Not implemented yet"
+  },
+  "validations": {
+    "invalid": "{path} is invalid",
+    "invalidType": "{path} must be a {type}",
+    "match": "{path} has invalid format",
+    "required": "{path} is required!",
+    "stringEmail": "{path} must be a valid email",
+    "stringMin": "{path} must be at least {min} characters"
   }
 }

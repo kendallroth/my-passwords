@@ -13,10 +13,45 @@ export default defineConfig(({ mode }) => {
   return {
     css: {
       preprocessorOptions: {
-        scss: {},
+        scss: {
+          // Some SCSS files (vars, mixins, etc) should automatically be imported in all SCSS files,
+          //   including SFC template blocks, to reduce common SCSS imports.
+          additionalData(source: string, fp: string) {
+            // NOTE: Both '@use' and '@forward' rules MUST be some of the first rules
+            //         in an SCSS file! Therefore, if the Vuetify overrides has any
+            //         SCSS imports prepended, it will break this order and cause errors!
+            if (fp.endsWith("vuetify.scss")) {
+              return source;
+            }
+
+            return `
+              @import "@styles/_breakpoints.scss";
+              @import "@styles/_functions.scss";
+              @import "@styles/_vars.scss";
+              ${source}
+            `;
+          },
+        },
       },
     },
-    plugins: [vue(), vuetify({ autoImport: true })],
+    plugins: [
+      vue(),
+      vuetify({ autoImport: true }),
+      // NOTE: Ran into an odd issue where any HMR updates broke due to the following error. This plugin sorta patches
+      //         this out, but I am not sure at what cost...
+      // Error: "ReferenceError: Cannot access page before initialization"
+      // Source: https://github.com/vitejs/vite/issues/3033#issuecomment-1360691044
+      {
+        name: "singleHMR",
+        handleHotUpdate({ modules }) {
+          modules.forEach((m) => {
+            m.importedModules = new Set();
+            m.importers = new Set();
+          });
+          return modules;
+        },
+      },
+    ],
     resolve: {
       alias: {
         "@assets": getPath("assets"),

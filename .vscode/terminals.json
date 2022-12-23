@@ -16,8 +16,8 @@
     },
     {
       "name": "server-express (⚡)",
-      "command": "npm run start:dev",
-      "cwd": "./server-expresss",
+      "command": "npm run start:watch",
+      "cwd": "./server-express",
       "description": "Server (Express) process",
       "icon": "run"
     },

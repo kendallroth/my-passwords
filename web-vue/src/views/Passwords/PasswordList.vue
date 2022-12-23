@@ -8,9 +8,6 @@
         <VBtn :icon="mdiRefresh" variant="text" @click="passwordsQuery.refetch" />
       </template>
     </ActionBar>
-    <VAlert border="start" class="mb-4" type="warning" variant="tonal">
-      Currently displaying items from all users!
-    </VAlert>
     <VCard>
       <div v-if="passwordsQuery.isLoading.value" class="d-flex align-center justify-center">
         <VProgressCircular class="ma-10" color="primary" indeterminate :size="64" />
@@ -18,7 +15,7 @@
       <VAlert v-else-if="passwordsQuery.isError.value" type="error">
         {{ getErrorMessage(passwordsQuery.error.value) }}
       </VAlert>
-      <template v-else>
+      <template v-else-if="passwordsQuery.data.value?.data.length">
         <VTable>
           <thead>
             <tr>
@@ -32,8 +29,24 @@
               <td>{{ item.name }}</td>
               <td>{{ item.collection?.name ?? "N/A" }}</td>
               <td>{{ item.username }}</td>
-              <td class="table-cell--notes text-truncate" :style="{ maxWidth: '400px' }">
-                {{ item.notes }}
+              <td :style="{ color: item.stats.color }">
+                <VRating
+                  density="compact"
+                  :empty-icon="mdiCircleOutline"
+                  :full-icon="mdiCircle"
+                  length="5"
+                  :model-value="item.stats.score"
+                  readonly
+                  size="small"
+                />
+              </td>
+              <td>
+                <LayoutStack align-items="center" direction="row" :spacing="0">
+                  {{ dayjs(item.createdAt).fromNow() }}
+                  <VIcon v-if="dayjs().diff(item.createdAt, 'day') > 365" color="warning">
+                    {{ mdiWarning }}
+                  </VIcon>
+                </LayoutStack>
               </td>
             </tr>
           </tbody>
@@ -47,20 +60,29 @@
           @update:model-value="(value) => (page = value)"
         />
       </template>
+      <VAlert v-else class="ma-8" type="info" variant="tonal">
+        {{ t("common.errors.noItems") }}
+      </VAlert>
     </VCard>
   </VMain>
 </template>
 
 <script setup lang="ts">
-import { mdiRefresh } from "@mdi/js";
+import {
+  mdiCircle,
+  mdiCircleOutline,
+  mdiRefresh,
+  mdiExclamationThick as mdiWarning,
+} from "@mdi/js";
 import { useQuery } from "@tanstack/vue-query";
-import { ref } from "vue";
+import { useDebounce } from "@vueuse/core";
+import dayjs from "dayjs";
+import { computed, reactive, ref } from "vue";
 import { useI18n } from "vue-i18n";
 
 import { ActionBar } from "@components/layout";
-import { useErrors } from "@composables";
+import { useAppSearch, useErrors } from "@composables";
 import { ApiService } from "@services";
-import { sleep } from "@utilities";
 
 import type { PaginatedResult } from "@typings/pagination.types";
 import type { Password } from "@typings/password.types";
@@ -72,11 +94,18 @@ interface PasswordTableColumn {
   labelKey: string;
 }
 
+const appSearch = reactive(
+  useAppSearch({
+    mountAction: "show",
+    unmountAction: "hide",
+  }),
+);
+
 const page = ref(1);
 const fetchPasswords = async (): Promise<PaginatedResult<Password>> => {
-  await sleep(500);
   const { data } = await ApiService.api.get("/password", {
     params: {
+      name: appSearch.text,
       page: page.value,
       sort: "name",
     },
@@ -84,9 +113,14 @@ const fetchPasswords = async (): Promise<PaginatedResult<Password>> => {
   return data as PaginatedResult<Password>;
 };
 
+const debouncedSearch = useDebounce(
+  computed(() => appSearch.text),
+  250,
+  { maxWait: 500 },
+);
 const passwordsQuery = useQuery({
   keepPreviousData: true,
-  queryKey: ["passwords", page],
+  queryKey: ["passwords", page, debouncedSearch],
   queryFn: fetchPasswords,
 });
 
@@ -94,7 +128,8 @@ const tableColumns: PasswordTableColumn[] = [
   { labelKey: "name" },
   { labelKey: "collection" },
   { labelKey: "username" },
-  { labelKey: "notes" },
+  { labelKey: "strength" },
+  { labelKey: "age" },
 ];
 </script>
 

@@ -5,7 +5,7 @@
 1. Ensure environment variables are populated with valid values
 2. Install dependencies with `npm install`
 3. Start Vite with `npm run dev`
-4. Access web frontend at `localhost:3000`
+4. Access web frontend at `localhost:600X`
 
 ## Testing
 

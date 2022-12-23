@@ -1,0 +1,100 @@
+/**
+ * SCSS media query generator utilizing Vuetify breakpoints (material design)
+ */
+
+@import "@styles/_vars.scss";
+
+// Extra-small breakpoints
+@mixin xsDown() {
+  @media only screen and (max-width: #{$breakpoint-sm - 1}px) {
+    @content;
+  }
+}
+
+@mixin xsOnly() {
+  @media only screen and (min-width: #{$breakpoint-xs}px) and (max-width: #{$breakpoint-sm - 1}px) {
+    @content;
+  }
+}
+
+@mixin xsUp() {
+  // No media query necessary (covers all breakpoints)
+  @content;
+}
+
+// Small breakpoints
+@mixin smDown() {
+  @media only screen and (max-width: #{$breakpoint-md - 1}px) {
+    @content;
+  }
+}
+
+@mixin smOnly() {
+  @media only screen and (min-width: #{$breakpoint-sm}px) and (max-width: #{$breakpoint-md - 1}px) {
+    @content;
+  }
+}
+
+@mixin smUp() {
+  @media only screen and (min-width: #{$breakpoint-sm}px) {
+    @content;
+  }
+}
+
+// Medium breakpoints
+@mixin mdDown() {
+  @media only screen and (max-width: #{$breakpoint-lg - 1}px) {
+    @content;
+  }
+}
+
+@mixin mdOnly() {
+  @media only screen and (min-width: #{$breakpoint-md}px) and (max-width: #{$breakpoint-lg - 1}px) {
+    @content;
+  }
+}
+
+@mixin mdUp() {
+  @media only screen and (min-width: #{$breakpoint-md}px) {
+    @content;
+  }
+}
+
+// Large breakpoints
+@mixin lgDown() {
+  @media only screen and (max-width: #{$breakpoint-xl - 1}px) {
+    @content;
+  }
+}
+
+@mixin lgOnly() {
+  @media only screen and (min-width: #{$breakpoint-lg}px) and (max-width: #{$breakpoint-xl - 1}px) {
+    @content;
+  }
+}
+
+@mixin lgUp() {
+  @media only screen and (min-width: #{$breakpoint-lg}px) {
+    @content;
+  }
+}
+
+// Extra-large breakpoints
+@mixin xlDown() {
+  // No media query necessary (covers all breakpoints)
+  @content;
+}
+
+@mixin xlOnly() {
+  // No max media query necessary (already top breakpoint)
+  // Technically equal to `xlUp` mixin
+  @media only screen and (min-width: #{$breakpoint-xl}px) {
+    @content;
+  }
+}
+
+@mixin xlUp() {
+  @media only screen and (min-width: #{$breakpoint-xl}px) {
+    @content;
+  }
+}
